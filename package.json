@@ -1,0 +1,33 @@
+{
+  "name": "duplicate-product-inspector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && nodemon -r dotenv/config src/index.js",
+    "build": "npx tsc",
+    "dev": "tsc && nodemon -r dotenv/config src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@shopify/shopify-api": "^1.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2",
+    "tsc": "^1.20150623.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.11",
+    "@types/node": "^14.14.35",
+    "@types/validator": "^13.1.3",
+    "concurrently": "^6.0.0",
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^9.1.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.2.3"
+  }
+}
