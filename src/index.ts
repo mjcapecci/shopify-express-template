@@ -5,8 +5,14 @@ import Shopify, { ApiVersion } from '@shopify/shopify-api';
 const verifyHmac = require('./middleware/verifyHmac');
 
 const app = express();
-app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(
+  express.json({
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf.toString();
+    },
+  })
+);
 app.use(verifyHmac);
 
 const { API_KEY, API_SECRET_KEY, SCOPES, SHOP, HOST } = process.env;
@@ -22,7 +28,7 @@ Shopify.Context.initialize({
 
 // define routes
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/sample', require('./routes/sample'));
+app.use('/api/webhooks', require('./routes/webhooks'));
 app.use('/', require('./routes/app'));
 
 app.listen(process.env.PORT || 5000, () => {
