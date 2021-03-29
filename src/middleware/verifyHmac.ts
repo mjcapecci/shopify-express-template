@@ -10,11 +10,16 @@ module.exports = async function (req: any, res: Response, next: NextFunction) {
   let valid = false;
   let fromHeader = false;
 
+  if (req.path === '/api/auth/install' || req.path === '/api/auth/callback') {
+    valid = true;
+    return next();
+  }
+
   if (req.rawBody && req.headers['x-shopify-hmac-sha256']) {
     fromHeader = true;
     const hmacHeader = req.headers['x-shopify-hmac-sha256'];
     const digest = crypto
-      .createHmac('SHA256', process.env.API_SECRET)
+      .createHmac('SHA256', process.env.API_SECRET_KEY)
       .update(req.rawBody)
       .digest('base64');
 

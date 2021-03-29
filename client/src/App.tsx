@@ -3,7 +3,6 @@ import { useAppBridge } from '@shopify/app-bridge-react';
 import { getSessionToken } from '@shopify/app-bridge-utils';
 
 // Components
-import SampleTokenSend from './components/SampleTokenSend';
 
 const App = () => {
   const [initialToken, setInitialToken] = useState(null);
@@ -18,9 +17,7 @@ const App = () => {
     getSessionForConnect();
   }, []);
 
-  return (
-    initialToken && <SampleTokenSend token={initialToken}></SampleTokenSend>
-  );
+  return initialToken && <p>LOADED IN</p>;
 };
 
 export default App;

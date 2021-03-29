@@ -1,14 +1,13 @@
 import Shopify, { AuthQuery } from '@shopify/shopify-api';
 import { Request, Response } from 'express';
 import DB_Shop from '../db/DB_Shop';
+import Uninstall from '../api/Webhooks/Uninstall';
 const express = require('express');
 const router = express.Router();
 
 const { SHOP } = process.env;
 
 router.get('/install', async (req: Request, res: Response) => {
-  // 4. Get basic react app with App Bridge up and running
-
   let authRoute = await Shopify.Auth.beginAuth(
     req,
     res,
@@ -36,6 +35,16 @@ router.get('/callback', async (req: Request, res: Response) => {
     DB_Shop.installShop({
       shop_name: currentSession.shop,
       shop_token: currentSession.accessToken,
+    });
+
+    const uninstall = new Uninstall(
+      currentSession.shop,
+      currentSession.accessToken
+    );
+
+    await uninstall.subscribeToWebhook('app/uninstall', {
+      callbackUrl: process.env.BASE_URL + '/api/webhooks/uninstall',
+      format: 'JSON',
     });
   } catch (error) {
     console.error(error);
