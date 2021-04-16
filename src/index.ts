@@ -13,7 +13,10 @@ app.use(
     },
   })
 );
-app.use(verifyHmac);
+
+if (!process.env.BYPASS_SECURITY_FOR_DEV) {
+  app.use(verifyHmac);
+}
 
 const { API_KEY, API_SECRET_KEY, SCOPES, SHOP, HOST } = process.env;
 
@@ -28,6 +31,7 @@ Shopify.Context.initialize({
 
 // define routes
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/shop', require('./routes/shop'));
 app.use('/api/webhooks', require('./routes/webhooks'));
 app.use('/', require('./routes/app'));
 

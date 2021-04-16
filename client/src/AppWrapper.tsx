@@ -1,4 +1,3 @@
-import React from 'react';
 import App from './App';
 import '@shopify/polaris/dist/styles.css';
 
@@ -17,7 +16,7 @@ function AppWrapper() {
   return (
     <AppProvider i18n={enTranslations}>
       <AppBridgeProvider config={appBridgeConfig}>
-        <App></App>
+        <App />
       </AppBridgeProvider>
     </AppProvider>
   );

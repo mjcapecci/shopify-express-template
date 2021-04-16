@@ -42,7 +42,7 @@ module.exports = async function (req: any, res: Response, next: NextFunction) {
     valid = await Shopify.Utils.validateHmac(req.query);
   }
 
-  const bypassed = process.env.BYPASS_SECURITY_FOR_DEV === 'true';
+  const bypassed = process.env.BYPASS_SECURITY_FOR_DEV;
   if (!valid && !bypassed) {
     console.log('Invalid HMAC');
     return res.status(403).send('Forbidden');
